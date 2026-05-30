@@ -1,0 +1,46 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 330,
+  "title": {
+    "text": "Which states attract higher spending per trip?",
+    "subtitle": "Average regional expenditure per overnight trip, December Quarter 2025"
+  },
+  "data": {
+    "url": "domestic_tourism_state.csv"
+  },
+  "mark": {
+    "type": "point",
+    "filled": true,
+    "size": 160
+  },
+  "encoding": {
+    "y": {
+      "field": "state_full",
+      "type": "nominal",
+      "sort": {
+        "field": "avg_spend_per_trip_aud",
+        "order": "descending"
+      },
+      "title": null
+    },
+    "x": {
+      "field": "avg_spend_per_trip_aud",
+      "type": "quantitative",
+      "title": "Average spend per trip (AUD)"
+    },
+    "tooltip": [
+      {
+        "field": "state_full",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "avg_spend_per_trip_aud",
+        "type": "quantitative",
+        "title": "Average spend per trip",
+        "format": "$,.0f"
+      }
+    ]
+  }
+}

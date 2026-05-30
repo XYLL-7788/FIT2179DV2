@@ -1,0 +1,123 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 330,
+  "title": {
+    "text": "Which states perform better in value than volume?",
+    "subtitle": "Positive values mean average spend rank is stronger than trip volume rank"
+  },
+  "data": {
+    "url": "domestic_tourism_state.csv"
+  },
+  "transform": [
+    {
+      "calculate": "datum.trip_rank - datum.avg_spend_rank",
+      "as": "rank_gap"
+    },
+    {
+      "calculate": "datum.rank_gap > 0 ? 'Stronger value rank' : datum.rank_gap < 0 ? 'Stronger volume rank' : 'Balanced'",
+      "as": "rank_gap_type"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "color": "#777",
+        "strokeDash": [6, 4]
+      },
+      "encoding": {
+        "x": {
+          "datum": 0
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "bar",
+        "cornerRadiusEnd": 4
+      },
+      "encoding": {
+        "y": {
+          "field": "state_full",
+          "type": "nominal",
+          "sort": {
+            "field": "rank_gap",
+            "order": "descending"
+          },
+          "title": null
+        },
+        "x": {
+          "field": "rank_gap",
+          "type": "quantitative",
+          "title": "Rank gap: trip rank minus average spend rank",
+          "scale": {
+            "domain": [-7, 7]
+          }
+        },
+        "color": {
+          "field": "rank_gap_type",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Stronger value rank", "Stronger volume rank", "Balanced"],
+            "range": ["#E69F00", "#9FB3C8", "#B8B8B8"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top"
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state_full",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "trip_rank",
+            "type": "quantitative",
+            "title": "Trip volume rank"
+          },
+          {
+            "field": "avg_spend_rank",
+            "type": "quantitative",
+            "title": "Average spend rank"
+          },
+          {
+            "field": "rank_gap",
+            "type": "quantitative",
+            "title": "Rank gap"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 6,
+        "fontSize": 11
+      },
+      "encoding": {
+        "y": {
+          "field": "state_full",
+          "type": "nominal",
+          "sort": {
+            "field": "rank_gap",
+            "order": "descending"
+          }
+        },
+        "x": {
+          "field": "rank_gap",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "rank_gap",
+          "type": "quantitative",
+          "format": "+.0f"
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,100 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 330,
+  "title": {
+    "text": "How does each state rank across tourism measures?",
+    "subtitle": "Rank 1 means the highest value for that measure"
+  },
+  "data": {
+    "url": "domestic_tourism_state.csv"
+  },
+  "transform": [
+    {
+      "fold": [
+        "trip_rank",
+        "spend_rank",
+        "avg_spend_rank",
+        "spend_per_night_rank"
+      ],
+      "as": ["measure", "rank"]
+    },
+    {
+      "calculate": "datum.measure == 'trip_rank' ? 'Trip volume' : datum.measure == 'spend_rank' ? 'Total spending' : datum.measure == 'avg_spend_rank' ? 'Spend per trip' : 'Spend per night'",
+      "as": "measure_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "white",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "sort": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"],
+          "title": null
+        },
+        "x": {
+          "field": "measure_label",
+          "type": "nominal",
+          "sort": ["Trip volume", "Total spending", "Spend per trip", "Spend per night"],
+          "title": null
+        },
+        "color": {
+          "field": "rank",
+          "type": "quantitative",
+          "title": "Rank",
+          "scale": {
+            "domain": [8, 1],
+            "range": ["#d9e6f2", "#E69F00"]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state_full",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "measure_label",
+            "type": "nominal",
+            "title": "Measure"
+          },
+          {
+            "field": "rank",
+            "type": "quantitative",
+            "title": "Rank"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 13,
+        "fontWeight": "bold",
+        "color": "#222"
+      },
+      "encoding": {
+        "y": {
+          "field": "state",
+          "type": "nominal",
+          "sort": ["NSW", "VIC", "QLD", "WA", "SA", "TAS", "ACT", "NT"]
+        },
+        "x": {
+          "field": "measure_label",
+          "type": "nominal",
+          "sort": ["Trip volume", "Total spending", "Spend per trip", "Spend per night"]
+        },
+        "text": {
+          "field": "rank",
+          "type": "quantitative"
+        }
+      }
+    }
+  ]
+}

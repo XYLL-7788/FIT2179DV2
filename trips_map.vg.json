@@ -1,0 +1,66 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 420,
+  "title": {
+    "text": "Where is domestic overnight tourism concentrated?",
+    "subtitle": "Overnight trips by state and territory, December Quarter 2025"
+  },
+  "data": {
+    "url": "australia_states.geojson",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.properties.STATE_NAME == 'New South Wales' ? 10569.738 : datum.properties.STATE_NAME == 'Victoria' ? 8043.486 : datum.properties.STATE_NAME == 'Queensland' ? 6772.215 : datum.properties.STATE_NAME == 'South Australia' ? 2049.879 : datum.properties.STATE_NAME == 'Western Australia' ? 2563.032 : datum.properties.STATE_NAME == 'Tasmania' ? 757.187 : datum.properties.STATE_NAME == 'Northern Territory' ? 214.038 : datum.properties.STATE_NAME == 'Australian Capital Territory' ? 585.714 : null",
+      "as": "overnight_trips_000"
+    },
+    {
+      "calculate": "datum.properties.STATE_NAME == 'New South Wales' ? 8263.313 : datum.properties.STATE_NAME == 'Victoria' ? 5707.574 : datum.properties.STATE_NAME == 'Queensland' ? 6957.188 : datum.properties.STATE_NAME == 'South Australia' ? 1733.669 : datum.properties.STATE_NAME == 'Western Australia' ? 2867.25 : datum.properties.STATE_NAME == 'Tasmania' ? 809.602 : datum.properties.STATE_NAME == 'Northern Territory' ? 386.857 : datum.properties.STATE_NAME == 'Australian Capital Territory' ? 548.783 : null",
+      "as": "regional_expenditure_m"
+    }
+  ],
+  "projection": {
+    "type": "mercator"
+  },
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "color": {
+      "field": "overnight_trips_000",
+      "type": "quantitative",
+      "title": "Overnight trips ('000)",
+      "scale": {
+        "range": ["#d9e6f2", "#0B3C5D"]
+      },
+      "legend": {
+        "format": ",.0f"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "properties.STATE_NAME",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "overnight_trips_000",
+        "type": "quantitative",
+        "title": "Overnight trips ('000)",
+        "format": ",.0f"
+      },
+      {
+        "field": "regional_expenditure_m",
+        "type": "quantitative",
+        "title": "Expenditure ($m)",
+        "format": ",.0f"
+      }
+    ]
+  }
+}

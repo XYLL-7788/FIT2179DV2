@@ -1,0 +1,76 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 420,
+  "title": {
+    "text": "Where is tourism spending stronger relative to population?",
+    "subtitle": "Regional tourism expenditure per resident, using ABS September 2025 population"
+  },
+  "data": {
+    "url": "australia_states.geojson",
+    "format": {
+      "type": "json",
+      "property": "features"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "datum.properties.STATE_NAME == 'New South Wales' ? 958.1208 : datum.properties.STATE_NAME == 'Victoria' ? 803.3971 : datum.properties.STATE_NAME == 'Queensland' ? 1222.1459 : datum.properties.STATE_NAME == 'South Australia' ? 908.5363 : datum.properties.STATE_NAME == 'Western Australia' ? 936.4895 : datum.properties.STATE_NAME == 'Tasmania' ? 1403.853 : datum.properties.STATE_NAME == 'Northern Territory' ? 1457.0885 : datum.properties.STATE_NAME == 'Australian Capital Territory' ? 1128.7186 : null",
+      "as": "spend_per_resident_aud"
+    },
+    {
+      "calculate": "datum.properties.STATE_NAME == 'New South Wales' ? 8624500 : datum.properties.STATE_NAME == 'Victoria' ? 7104300 : datum.properties.STATE_NAME == 'Queensland' ? 5692600 : datum.properties.STATE_NAME == 'South Australia' ? 1908200 : datum.properties.STATE_NAME == 'Western Australia' ? 3061700 : datum.properties.STATE_NAME == 'Tasmania' ? 576700 : datum.properties.STATE_NAME == 'Northern Territory' ? 265500 : datum.properties.STATE_NAME == 'Australian Capital Territory' ? 486200 : null",
+      "as": "population"
+    },
+    {
+      "calculate": "datum.properties.STATE_NAME == 'New South Wales' ? 1225.5479 : datum.properties.STATE_NAME == 'Victoria' ? 1132.1997 : datum.properties.STATE_NAME == 'Queensland' ? 1189.6524 : datum.properties.STATE_NAME == 'South Australia' ? 1074.2475 : datum.properties.STATE_NAME == 'Western Australia' ? 837.1271 : datum.properties.STATE_NAME == 'Tasmania' ? 1312.9651 : datum.properties.STATE_NAME == 'Northern Territory' ? 806.1695 : datum.properties.STATE_NAME == 'Australian Capital Territory' ? 1204.6771 : null",
+      "as": "trips_per_1000_residents"
+    }
+  ],
+  "projection": {
+    "type": "mercator"
+  },
+  "mark": {
+    "type": "geoshape",
+    "stroke": "white",
+    "strokeWidth": 1
+  },
+  "encoding": {
+    "color": {
+      "field": "spend_per_resident_aud",
+      "type": "quantitative",
+      "title": "Spend per resident (AUD)",
+      "scale": {
+        "range": ["#fff2cc", "#E69F00"]
+      },
+      "legend": {
+        "format": "$,.0f"
+      }
+    },
+    "tooltip": [
+      {
+        "field": "properties.STATE_NAME",
+        "type": "nominal",
+        "title": "State"
+      },
+      {
+        "field": "spend_per_resident_aud",
+        "type": "quantitative",
+        "title": "Spend per resident",
+        "format": "$,.0f"
+      },
+      {
+        "field": "trips_per_1000_residents",
+        "type": "quantitative",
+        "title": "Trips per 1,000 residents",
+        "format": ",.0f"
+      },
+      {
+        "field": "population",
+        "type": "quantitative",
+        "title": "Population",
+        "format": ",.0f"
+      }
+    ]
+  }
+}

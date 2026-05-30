@@ -1,0 +1,161 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": 650,
+  "height": 420,
+  "title": {
+    "text": "Do longer trips also mean higher spending?",
+    "subtitle": "Orange highlights states above both the average stay length and average spend"
+  },
+  "data": {
+    "url": "domestic_tourism_state.csv"
+  },
+  "transform": [
+    {
+      "joinaggregate": [
+        {
+          "op": "mean",
+          "field": "avg_nights_per_trip",
+          "as": "mean_nights"
+        },
+        {
+          "op": "mean",
+          "field": "avg_spend_per_trip_aud",
+          "as": "mean_spend"
+        }
+      ]
+    },
+    {
+      "calculate": "datum.avg_nights_per_trip >= datum.mean_nights && datum.avg_spend_per_trip_aud >= datum.mean_spend ? 'Above both averages' : 'Other states'",
+      "as": "tourism_type"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [6, 4],
+        "color": "#777",
+        "opacity": 0.55
+      },
+      "encoding": {
+        "x": {
+          "aggregate": "mean",
+          "field": "avg_nights_per_trip",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "rule",
+        "strokeDash": [6, 4],
+        "color": "#777",
+        "opacity": 0.55
+      },
+      "encoding": {
+        "y": {
+          "aggregate": "mean",
+          "field": "avg_spend_per_trip_aud",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "circle",
+        "opacity": 0.85,
+        "stroke": "white",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "avg_nights_per_trip",
+          "type": "quantitative",
+          "title": "Average nights per trip",
+          "scale": {
+            "domain": [2.55, 4.05]
+          }
+        },
+        "y": {
+          "field": "avg_spend_per_trip_aud",
+          "type": "quantitative",
+          "title": "Average spend per trip (AUD)",
+          "scale": {
+            "domain": [650, 1950]
+          }
+        },
+        "size": {
+          "field": "overnight_trips_000",
+          "type": "quantitative",
+          "title": "Overnight trips ('000)",
+          "scale": {
+            "range": [80, 1300]
+          }
+        },
+        "color": {
+          "field": "tourism_type",
+          "type": "nominal",
+          "title": "Tourism type",
+          "scale": {
+            "domain": ["Above both averages", "Other states"],
+            "range": ["#E69F00", "#A8A8A8"]
+          }
+        },
+        "tooltip": [
+          {
+            "field": "state_full",
+            "type": "nominal",
+            "title": "State"
+          },
+          {
+            "field": "avg_nights_per_trip",
+            "type": "quantitative",
+            "title": "Average nights",
+            "format": ".2f"
+          },
+          {
+            "field": "avg_spend_per_trip_aud",
+            "type": "quantitative",
+            "title": "Average spend",
+            "format": "$,.0f"
+          },
+          {
+            "field": "overnight_trips_000",
+            "type": "quantitative",
+            "title": "Overnight trips ('000)",
+            "format": ",.0f"
+          },
+          {
+            "field": "tourism_type",
+            "type": "nominal",
+            "title": "Category"
+          }
+        ]
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -8,
+        "fontSize": 11,
+        "color": "#222"
+      },
+      "encoding": {
+        "x": {
+          "field": "avg_nights_per_trip",
+          "type": "quantitative"
+        },
+        "y": {
+          "field": "avg_spend_per_trip_aud",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "state",
+          "type": "nominal"
+        }
+      }
+    }
+  ]
+}

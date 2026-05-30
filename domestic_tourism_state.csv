@@ -1,0 +1,9 @@
+state,state_full,overnight_trips_000,visitor_nights_000,regional_expenditure_m,avg_spend_per_trip_aud,avg_nights_per_trip,population,spend_per_night_aud,trips_per_1000_residents,spend_per_resident_aud,trip_rank,spend_rank,avg_spend_rank,avg_nights_rank,spend_per_night_rank,volume_group,value_group,tourism_type
+NSW,New South Wales,10569.738,31126.402,8263.313,781.7898,2.9449,8624500,265.476,1225.5479,958.1208,1,1,7,6,8,High volume,Lower value,High volume + lower value
+VIC,Victoria,8043.486,21450.006,5707.574,709.5896,2.6668,7104300,266.0873,1132.1997,803.3971,2,3,8,8,7,High volume,Lower value,High volume + lower value
+QLD,Queensland,6772.215,23303.229,6957.188,1027.3135,3.441,5692600,298.5504,1189.6524,1222.1459,3,2,4,3,5,High volume,High value,High volume + high value
+SA,South Australia,2049.879,6426.621,1733.669,845.7421,3.1351,1908200,269.7637,1074.2475,908.5363,5,5,6,5,6,Lower volume,Lower value,Lower volume + lower value
+WA,Western Australia,2563.032,8805.121,2867.25,1118.6946,3.4354,3061700,325.6344,837.1271,936.4895,4,4,2,4,3,Lower volume,High value,Lower volume + high value
+TAS,Tasmania,757.187,2613.117,809.602,1069.2233,3.4511,576700,309.8223,1312.9651,1403.853,6,6,3,2,4,Lower volume,High value,Lower volume + high value
+NT,Northern Territory,214.038,841.555,386.857,1807.422,3.9318,265500,459.6931,806.1695,1457.0885,8,8,1,1,1,Lower volume,High value,Lower volume + high value
+ACT,Australian Capital Territory,585.714,1611.436,548.783,936.947,2.7512,486200,340.5553,1204.6771,1128.7186,7,7,5,7,2,Lower volume,Lower value,Lower volume + lower value
